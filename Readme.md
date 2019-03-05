@@ -17,5 +17,5 @@ q4 -> hadoop jar bigdata-1.0-SNAPSHOT.jar mr.q4.JobChaining <userdata.txt path> 
 
 q1 -> java -cp bigdata-1.0-SNAPSHOT-shaded.jar spark.q1.Common <soc-LiveJournal1Adj.txt path> output1
 q2 -> java -cp bigdata-1.0-SNAPSHOT-shaded.jar spark.q2.Top10 <soc-LiveJournal1Adj.txt path> <userdata.txt> output2
-q3 -> java -cp bigdata-1.0-SNAPSHOT-shaded.jar spark.q3.Filter <business.csv path> <review.csv path> output3
-q4 -> java -cp bigdata-1.0-SNAPSHOT-shaded.jar spark.q4.Average <business.csv path> <review.csv path> output4
+q3 -> java -cp bigdata-1.0-SNAPSHOT-shaded.jar spark.q3.Filter <business.txt path> <review.txt path> output3
+q4 -> java -cp bigdata-1.0-SNAPSHOT-shaded.jar spark.q4.Average <business.txt path> <review.txt path> output4

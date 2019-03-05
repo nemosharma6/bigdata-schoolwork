@@ -18,17 +18,19 @@ object Filter extends App {
 
   val sparkContext = sparkSession.sparkContext
 
+  import sparkSession.implicits._
+
   val business = args(0)
   val review = args(1)
   val output = args(2)
-  val bDf = sparkSession.read.format("csv").load(business)
+  val businessRdd = sparkContext.textFile(business)
 
   val businessSchema = new StructType()
     .add(StructField("business_id", StringType, nullable = true))
     .add(StructField("full_address", StringType, nullable = true))
     .add(StructField("categories", StringType, nullable = true))
 
-  val b = bDf.rdd.map(i => i.mkString.split("::")).filter(_.length == 3).map(e => Row(e(0), e(1), e(2)))
+  val b = businessRdd.map(i => i.mkString.split("::")).filter(_.length == 3).map(e => Row(e(0), e(1), e(2)))
 
   val businessDf = sparkSession.createDataFrame(b, businessSchema)
   val bId: Seq[String] = businessDf.filter("categories like '%Colleges & Universities%'")
@@ -43,18 +45,16 @@ object Filter extends App {
     .add(StructField("business_id", StringType, nullable = true))
     .add(StructField("stars", DoubleType, nullable = true))
 
-  val rDf = sparkSession.read.format("csv").load(review)
-  val r = rDf.rdd.map(i => i.mkString.split("::")).filter(_.length == 4)
+  val reviewRdd = sparkContext.textFile(review)
+  val r = reviewRdd.map(i => i.mkString.split("::")).filter(_.length == 4)
     .map(e => Row(e(0), e(1), e(2), e(3).toDouble))
-
-  import sparkSession.implicits._
 
   val ratingDf = sparkSession.createDataFrame(r, reviewSchema)
   ratingDf
     .filter($"business_id".isin(bId: _*))
     .map(e => e.getString(0) + "," + e.getDouble(3))
     .repartition(1)
-    .write
-    .text(output)
+    .rdd
+    .saveAsTextFile(output)
 
 }
