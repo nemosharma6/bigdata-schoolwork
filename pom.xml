@@ -101,10 +101,6 @@
                     <groupId>org.slf4j</groupId>
                     <artifactId>jcl-over-slf4j</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>com.twitter</groupId>
-                    <artifactId>chill-java</artifactId>
-                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
