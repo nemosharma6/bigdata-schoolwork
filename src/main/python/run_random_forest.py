@@ -30,7 +30,7 @@ if __name__ == "__main__":
     sc = SparkContext()
     sqlContext = SQLContext(sc)
 
-    random_forest_model = RandomForestClassificationModel.load("random_forest_model.model")
+    random_forest_model = RandomForestClassificationModel.load("rf.model")
 
     if len(sys.argv) != 4:
         print('Number of arguments is not correct')
@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     data = get_data(url)
     df = sqlContext.createDataFrame(data, schema=["category", "text"])
-    pipeline_fit = PipelineModel.load("pipeline2")
+    pipeline_fit = PipelineModel.load("rf_pipeline")
     data_set = pipeline_fit.transform(df)
 
     predictions = random_forest_model.transform(data_set)

@@ -8,7 +8,16 @@ The persisted model was loaded in order to run it on streaming data. The accurac
 
 Number of iterations: 100
 Alpha parameter: 0.2
+Accuracy: 65%
+
+### Random Forest Classifier
+
+Number of trees: 40
+Max depth: 4
+Accuracy: 21%
 
 ### Note:
 
 Initial accuracy of 40 % was improved to 70 % by increasing the training data set from 4000 articles to 15000 articles. Therefore, further increasing the dataset would surely help in creating a better trained model.
+
+In case of Random Forest Classifier, due to memory limitations I could only attain an accuracy of 21% for 7000 articles.

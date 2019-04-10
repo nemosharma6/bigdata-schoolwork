@@ -33,7 +33,7 @@ if __name__ == "__main__":
     sqlContext = SQLContext(sc)
 
     consumer = KafkaConsumer(
-        'guardian11',
+        'guardian07',
         bootstrap_servers=['localhost:9092'],
         auto_offset_reset='earliest',
         enable_auto_commit=True,
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     pipeline = Pipeline(stages=[regex_tokenizer, stop_words_remover, count_vectors, label_string_index])
     (training_data, test_data) = df.randomSplit([0.8, 0.2], seed=100)
     pipeline_fit = pipeline.fit(training_data)
-    pipeline_fit.save("pipeline2")
+    pipeline_fit.save("rf_pipeline")
 
     training_data_set = pipeline_fit.transform(training_data)
     training_data_set.show(5)
@@ -96,4 +96,4 @@ if __name__ == "__main__":
     percent = evaluator.evaluate(predictions)
     print(percent * 100)
 
-    lr_model.save("random_forest_model.model")
+    lr_model.save("rf.model")

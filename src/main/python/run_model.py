@@ -30,7 +30,7 @@ if __name__ == "__main__":
     sc = SparkContext()
     sqlContext = SQLContext(sc)
 
-    lr_model = LogisticRegressionModel.load("lrm_model.model")
+    lr_model = LogisticRegressionModel.load("lr.model")
 
     if len(sys.argv) != 4:
         print('Number of arguments is not correct')
@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     data = get_data(url)
     df = sqlContext.createDataFrame(data, schema=["category", "text"])
-    pipeline_fit = PipelineModel.load("pipeline")
+    pipeline_fit = PipelineModel.load("lr_pipeline")
     data_set = pipeline_fit.transform(df)
 
     predictions = lr_model.transform(data_set)
