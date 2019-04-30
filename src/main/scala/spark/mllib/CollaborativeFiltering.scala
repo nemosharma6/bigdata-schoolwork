@@ -23,8 +23,8 @@ object CollaborativeFiltering extends App {
   val testRatings = testData.map(i => i.mkString.split("::")).filter(_.length == 4)
     .map(e => Rating(e(0).toInt, e(1).toInt, e(2).toDouble))
 
-  val rank = 20
-  val numIterations = 10
+  val rank = 30
+  val numIterations = 15
   val model = ALS.train(trainingRatings, rank, numIterations, 0.01)
 
   val usersProducts = testRatings.map {
